@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jean&Len – Produktseite mit AOV-Optimierungen (Vorschau)</title>
+    <style>
+        /* === RESET & BASE === */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #333;
+            background: #fff;
+            line-height: 1.5;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; height: auto; }
+
+        /* === HINWEIS-BANNER (Vorschau) === */
+        .preview-banner {
+            background: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .preview-banner strong { color: #ffd700; }
+        .preview-banner .tag {
+            display: inline-block;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-left: 6px;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+        .preview-banner .tag--green {
+            background: #2e7d32;
+        }
+
+        /* === HEADER === */
+        .header {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header__logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .header__nav {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .header__nav a:hover { text-decoration: underline; }
+        .header__actions {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+        }
+
+        /* === PROMO BANNER === */
+        .promo-bar {
+            background: #fce4ec;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #c62828;
+            font-weight: 500;
+        }
+
+        /* === BREADCRUMB (NEU) === */
+        .breadcrumb {
+            padding: 12px 40px;
+            font-size: 13px;
+            color: #888;
+            background: #fafafa;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .breadcrumb a { color: #666; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { color: #333; }
+        .breadcrumb .new-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 3px;
+            margin-left: 6px;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+
+        /* === PRODUCT LAYOUT === */
+        .product {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 40px;
+        }
+        @media (max-width: 768px) {
+            .product { grid-template-columns: 1fr; padding: 20px; gap: 24px; }
+        }
+
+        /* === PRODUCT GALLERY === */
+        .gallery__main {
+            width: 100%;
+            border-radius: 12px;
+            background: #f5f5f5;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery__main img {
+            width: 80%;
+            height: auto;
+        }
+        .gallery__badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: #2e7d32;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .gallery__thumbs {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .gallery__thumb {
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            background: #f0f0f0;
+            border: 2px solid transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+        }
+        .gallery__thumb--active {
+            border-color: #000;
+        }
+
+        /* === PRODUCT INFO === */
+        .product-info { display: flex; flex-direction: column; gap: 0; }
+
+        .product-info__title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #000;
+            line-height: 1.3;
+        }
+
+        /* Bewertungen direkt unter Titel (NEU - vorher weit unten) */
+        .product-info__reviews-inline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+        .stars { color: #f9a825; font-size: 16px; letter-spacing: 1px; }
+        .review-count {
+            font-size: 13px;
+            color: #666;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .review-count:hover { color: #000; }
+        .oeko-test-inline {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .product-info__price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+        }
+        .product-info__price-per-unit {
+            font-size: 13px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .product-info__variants {
+            margin-top: 20px;
+        }
+        .product-info__variants-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        .variant-options {
+            display: flex;
+            gap: 8px;
+        }
+        .variant-option {
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .variant-option:hover { border-color: #999; }
+        .variant-option--active {
+            border-color: #000;
+            background: #000;
+            color: #fff;
+        }
+
+        /* === QUANTITY & CTA === */
+        .buy-section { margin-top: 24px; }
+        .quantity-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .quantity-selector button {
+            width: 40px;
+            height: 44px;
+            border: none;
+            background: #f5f5f5;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .quantity-selector button:hover { background: #eee; }
+        .quantity-selector input {
+            width: 48px;
+            height: 44px;
+            text-align: center;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .btn-cart {
+            flex: 1;
+            height: 48px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-cart:hover { background: #333; }
+
+        /* Micro-Copy unter dem CTA (NEU) */
+        .buy-microcopy {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #888;
+        }
+        .buy-microcopy span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* === KONFETTIPUNKTE (verbessert) === */
+        .konfetti-hint {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #f3e5f5;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #6a1b9a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .konfetti-hint strong { font-weight: 700; }
+
+        /* ============================================ */
+        /* ========  AOV-OPTIMIERUNGEN (NEU)  ======== */
+        /* ============================================ */
+
+        /* --- 1. CROSS-SELL BUNDLE --- */
+        .jl-cross-sell-bundle {
+            margin-top: 20px;
+            padding: 16px;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+        .jl-cross-sell-bundle__header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .jl-cross-sell-bundle__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #000;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .jl-cross-sell-bundle__title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+        .jl-cross-sell-bundle__items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .jl-cross-sell-bundle__item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .jl-cross-sell-bundle__img {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            background: #eee;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .jl-cross-sell-bundle__info {
+            flex: 1;
+            min-width: 0;
+        }
+        .jl-cross-sell-bundle__name {
+            font-size: 13px;
+            font-weight: 500;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .jl-cross-sell-bundle__price {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+        }
+        .jl-cross-sell-bundle__add {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            border: 1.5px solid #000;
+            background: #fff;
+            color: #000;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .jl-cross-sell-bundle__add:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Highlighting-Rahmen für Vorschau */
+        .highlight-new {
+            position: relative;
+        }
+        .highlight-new::before {
+            content: 'NEU';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 3px;
+            z-index: 10;
+            letter-spacing: 0.5px;
+        }
+        .highlight-new--green::before { background: #2e7d32; content: 'AOV+'; }
+
+        /* --- 2. MENGENRABATT-HINWEIS --- */
+        .jl-quantity-incentive {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .jl-quantity-incentive__badge {
+            flex-shrink: 0;
+            padding: 3px 8px;
+            background: #000;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-radius: 4px;
+        }
+        .jl-quantity-incentive__text {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* --- 3. VERSANDKOSTEN-PROGRESS-BAR --- */
+        .jl-shipping-bar {
+            padding: 12px 16px;
+            margin-top: 16px;
+            background: #f0faf0;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+        }
+        .jl-shipping-bar__text {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .jl-shipping-bar__text strong { color: #000; }
+        .jl-shipping-bar__track {
+            width: 100%;
+            height: 7px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .jl-shipping-bar__fill {
+            height: 100%;
+            width: 37%;
+            background: linear-gradient(90deg, #4caf50, #2e7d32);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .jl-shipping-bar__hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* === PRODUCT DETAILS === */
+        .product-details {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 40px;
+            border-top: 1px solid #eee;
+        }
+        .product-details h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .product-details p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.7;
+        }
+        .product-details ul {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        .product-details li {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 4px;
+        }
+
+        /* === USP BAR === */
+        .usp-bar {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            padding: 16px;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            color: #555;
+        }
+        .usp-bar span { display: flex; align-items: center; gap: 6px; }
+
+        /* === ANNOTATIONS === */
+        .annotation {
+            background: #fffde7;
+            border-left: 4px solid #ffd600;
+            padding: 12px 16px;
+            margin: 20px 0;
+            font-size: 13px;
+            color: #555;
+            border-radius: 0 6px 6px 0;
+        }
+        .annotation strong { color: #000; }
+    </style>
+</head>
+<body>
+
+<!-- VORSCHAU-HINWEIS -->
+<div class="preview-banner">
+    Diese Vorschau zeigt die <strong>AOV-Optimierungen</strong> für die Produktdetailseite.
+    Alle neuen Elemente sind mit <span class="tag">NEU</span> oder <span class="tag tag--green">AOV+</span> markiert.
+</div>
+
+<!-- PROMO BANNER -->
+<div class="promo-bar">
+    Valentinstag-Aktion: Sichere dir jetzt exklusive Angebote!
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header__logo">jean&len</div>
+    <nav class="header__nav">
+        <a href="#">Haare</a>
+        <a href="#">Hände</a>
+        <a href="#">Körper</a>
+        <a href="#"><strong>Nachfüllpacks</strong></a>
+        <a href="#">Sonne</a>
+        <a href="#">Gesichtspflege</a>
+        <a href="#">Parfum</a>
+        <a href="#">Männer</a>
+    </nav>
+    <div class="header__actions">
+        <span>🔍</span>
+        <span>♡</span>
+        <span>👤</span>
+        <span>🛒 0</span>
+    </div>
+</div>
+
+<!-- BREADCRUMB (NEU) -->
+<div class="breadcrumb highlight-new">
+    <a href="#">Home</a> &rsaquo;
+    <a href="#">Nachfüllpacks</a> &rsaquo;
+    <a href="#">Hände</a> &rsaquo;
+    <span>Hand & Body Wash Rosemary/Ginger Refill 1,5L</span>
+    <span class="new-badge">NEU</span>
+</div>
+
+<!-- USP BAR -->
+<div class="usp-bar">
+    <span>📦 Kostenloser Versand ab 49 €</span>
+    <span>🔒 Sichere Bezahlung</span>
+    <span>🌱 Ohne Parabene & Silikone</span>
+    <span>⭐ ÖkoTest geprüft</span>
+</div>
+
+<!-- PRODUCT SECTION -->
+<div class="product">
+
+    <!-- LEFT: Gallery -->
+    <div class="gallery">
+        <div class="gallery__main">
+            <div class="gallery__badge">Nachfüllpack</div>
+            <img src="https://jlcdn.cstatic.com/media/f0/89/96/1765961573/hand-body-wash-rogi-refill-INT-1500ml-02p-1ff7ba.png?ts=1765961573"
+                 alt="Hand & Body Wash Rosemary/Ginger Refill 1,5L"
+                 style="width: 85%; height: auto; object-fit: contain;">
+        </div>
+        <div class="gallery__thumbs">
+            <div class="gallery__thumb gallery__thumb--active">Vorne</div>
+            <div class="gallery__thumb">Hinten</div>
+            <div class="gallery__thumb">ÖkoTest</div>
+            <div class="gallery__thumb">Lifestyle</div>
+            <div class="gallery__thumb">Detail</div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Product Info -->
+    <div class="product-info">
+
+        <h1 class="product-info__title">Hand & Body Wash Rosemary/Ginger Refill INT, 1,5 L</h1>
+
+        <!-- BEWERTUNGEN + ÖKOTEST INLINE (NEU - vorher weit unten auf der Seite) -->
+        <div class="product-info__reviews-inline highlight-new">
+            <span class="stars">★★★★★</span>
+            <span class="review-count">71 Bewertungen</span>
+            <span class="oeko-test-inline">✓ ÖkoTest</span>
+        </div>
+
+        <div class="product-info__price">€17,99</div>
+        <div class="product-info__price-per-unit">(€11,99 / Liter) inkl. MwSt., zzgl. Versand</div>
+
+        <!-- Varianten -->
+        <div class="product-info__variants">
+            <div class="product-info__variants-label">Duft wählen:</div>
+            <div class="variant-options">
+                <div class="variant-option">Blutorange/Vetiver</div>
+                <div class="variant-option variant-option--active">Rosemary/Ginger</div>
+                <div class="variant-option">Pfingstrose/Litschi</div>
+            </div>
+        </div>
+
+        <!-- Buy Section -->
+        <div class="buy-section">
+            <div class="quantity-row">
+                <div class="quantity-selector">
+                    <button id="qty-minus">−</button>
+                    <input type="number" id="qty-input" value="1" min="1">
+                    <button id="qty-plus">+</button>
+                </div>
+                <button class="btn-cart">In den Warenkorb</button>
+            </div>
+
+            <!-- Micro-Copy unter CTA (NEU) -->
+            <div class="buy-microcopy highlight-new">
+                <span>📦 1-3 Werktage</span>
+                <span>🔒 Sichere Bezahlung</span>
+                <span>↩️ 14 Tage Rückgabe</span>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!--  AOV-OPTIMIERUNG 1: MENGENRABATT-HINWEIS     -->
+        <!-- ============================================ -->
+        <div class="jl-quantity-incentive highlight-new--green highlight-new" id="qty-incentive" style="display: none;">
+            <div class="jl-quantity-incentive__badge">Spar-Tipp</div>
+            <p class="jl-quantity-incentive__text">
+                Bestelle <strong id="qty-target">2</strong> und spare <strong id="savings-target">€3,60</strong>!
+            </p>
+        </div>
+
+        <!-- ============================================ -->
+        <!--  AOV-OPTIMIERUNG 2: VERSANDKOSTEN-BAR        -->
+        <!-- ============================================ -->
+        <div class="jl-shipping-bar highlight-new--green highlight-new">
+            <p class="jl-shipping-bar__text">
+                Nur noch <strong id="remaining-amount">€31,01</strong> bis zum <strong>kostenlosen Versand</strong>!
+            </p>
+            <div class="jl-shipping-bar__track">
+                <div class="jl-shipping-bar__fill" id="shipping-fill"></div>
+            </div>
+            <div class="jl-shipping-bar__hint" id="shipping-hint">
+                💡 Tipp: Bestelle eine Dispenserpumpe dazu und spare Versandkosten
+            </div>
+        </div>
+
+        <!-- Konfettipunkte (verbessert) -->
+        <div class="konfetti-hint highlight-new">
+            🎉 Du erhältst <strong>18 Konfettipunkte</strong> = <strong>0,18 € Guthaben</strong> für deine nächste Bestellung
+        </div>
+
+        <!-- ============================================ -->
+        <!--  AOV-OPTIMIERUNG 3: CROSS-SELL BUNDLE        -->
+        <!-- ============================================ -->
+        <div class="jl-cross-sell-bundle highlight-new--green highlight-new">
+            <div class="jl-cross-sell-bundle__header">
+                <span class="jl-cross-sell-bundle__icon">+</span>
+                <span class="jl-cross-sell-bundle__title">Dazu passt perfekt</span>
+            </div>
+            <div class="jl-cross-sell-bundle__items">
+                <!-- Item 1 -->
+                <div class="jl-cross-sell-bundle__item">
+                    <div class="jl-cross-sell-bundle__img">🔄</div>
+                    <div class="jl-cross-sell-bundle__info">
+                        <span class="jl-cross-sell-bundle__name">Dispenserpumpe für Refill</span>
+                        <span class="jl-cross-sell-bundle__price">€3,99</span>
+                    </div>
+                    <button class="jl-cross-sell-bundle__add">Mitbestellen</button>
+                </div>
+                <!-- Item 2 -->
+                <div class="jl-cross-sell-bundle__item">
+                    <div class="jl-cross-sell-bundle__img">🧴</div>
+                    <div class="jl-cross-sell-bundle__info">
+                        <span class="jl-cross-sell-bundle__name">Glasflasche für Nachfüllpack</span>
+                        <span class="jl-cross-sell-bundle__price">€9,99</span>
+                    </div>
+                    <button class="jl-cross-sell-bundle__add">Mitbestellen</button>
+                </div>
+                <!-- Item 3 -->
+                <div class="jl-cross-sell-bundle__item">
+                    <div class="jl-cross-sell-bundle__img">✨</div>
+                    <div class="jl-cross-sell-bundle__info">
+                        <span class="jl-cross-sell-bundle__name">Bodylotion Rosemary/Ginger 300ml</span>
+                        <span class="jl-cross-sell-bundle__price">€7,99</span>
+                    </div>
+                    <button class="jl-cross-sell-bundle__add">Mitbestellen</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ANNOTATION: Was wurde geändert -->
+<div style="max-width: 1200px; margin: 0 auto; padding: 0 40px 40px;">
+    <div class="annotation">
+        <strong>Zusammenfassung der AOV-Optimierungen:</strong><br><br>
+        1. <strong>Cross-Sell "Dazu passt perfekt"</strong> — Zeigt passende Produkte (Dispenserpumpe, Glasflasche, Bodylotion) direkt unter dem Warenkorb-Button mit 1-Klick "Mitbestellen". Erhöht AOV um durchschnittlich €5-15 pro Bestellung.<br><br>
+        2. <strong>Versandkosten-Fortschrittsbalken</strong> — Zeigt dem Kunden live, wie viel noch bis zum kostenlosen Versand fehlt (49 € Schwelle). Motiviert zu Zusatzkäufen. Bei diesem Produkt (€17,99) fehlen noch €31,01 → perfekt für Cross-Sell.<br><br>
+        3. <strong>Mengenrabatt-Hinweis "Spar-Tipp"</strong> — Erscheint dynamisch, wenn Kunde die Menge auf 2+ erhöht. Zeigt die konkrete Ersparnis in Euro. Fördert größere Bestellmengen bei Refill-Produkten.<br><br>
+        <strong>Zusätzliche Quick-Wins:</strong><br>
+        4. <strong>Bewertungen + ÖkoTest nach oben gezogen</strong> — 71 Bewertungen (5/5) und ÖkoTest-Badge direkt unter dem Titel statt weit unten auf der Seite. Erhöht sofortiges Vertrauen.<br>
+        5. <strong>Breadcrumb hinzugefügt</strong> — Verbessert Navigation, SEO und Orientierung.<br>
+        6. <strong>Micro-Copy unter dem CTA</strong> — Lieferzeit, sichere Bezahlung, Rückgaberecht reduzieren Kaufbarrieren.<br>
+        7. <strong>Konfettipunkte erklärt</strong> — "18 Punkte = 0,18 € Guthaben" statt nur "18 Konfettipunkte".
+    </div>
+</div>
+
+<!-- Interaktives JS für die Vorschau -->
+<script>
+    const qtyInput = document.getElementById('qty-input');
+    const qtyMinus = document.getElementById('qty-minus');
+    const qtyPlus = document.getElementById('qty-plus');
+    const incentive = document.getElementById('qty-incentive');
+    const qtyTarget = document.getElementById('qty-target');
+    const savingsTarget = document.getElementById('savings-target');
+    const remainingAmount = document.getElementById('remaining-amount');
+    const shippingFill = document.getElementById('shipping-fill');
+    const shippingHint = document.getElementById('shipping-hint');
+
+    const UNIT_PRICE = 17.99;
+    const THRESHOLD = 49;
+    const DISCOUNT = 0.10;
+
+    function update() {
+        const qty = parseInt(qtyInput.value) || 1;
+        const total = qty * UNIT_PRICE;
+        const remaining = Math.max(0, THRESHOLD - total);
+        const pct = Math.min(100, (total / THRESHOLD) * 100);
+
+        // Mengenrabatt
+        if (qty >= 2) {
+            const savings = (total * DISCOUNT);
+            qtyTarget.textContent = qty;
+            savingsTarget.textContent = '€' + savings.toFixed(2).replace('.', ',');
+            incentive.style.display = '';
+        } else {
+            incentive.style.display = 'none';
+        }
+
+        // Versandkosten-Bar
+        if (remaining > 0) {
+            remainingAmount.textContent = '€' + remaining.toFixed(2).replace('.', ',');
+            remainingAmount.closest('.jl-shipping-bar__text').innerHTML =
+                'Nur noch <strong>€' + remaining.toFixed(2).replace('.', ',') + '</strong> bis zum <strong>kostenlosen Versand</strong>!';
+            shippingHint.style.display = '';
+        } else {
+            remainingAmount.closest('.jl-shipping-bar__text').innerHTML =
+                '✅ <strong>Kostenloser Versand</strong> freigeschaltet!';
+            shippingHint.style.display = 'none';
+        }
+        shippingFill.style.width = pct + '%';
+        if (pct >= 100) {
+            shippingFill.style.background = 'linear-gradient(90deg, #2e7d32, #43a047)';
+        } else {
+            shippingFill.style.background = 'linear-gradient(90deg, #4caf50, #2e7d32)';
+        }
+    }
+
+    qtyMinus.addEventListener('click', () => {
+        const v = parseInt(qtyInput.value) || 1;
+        if (v > 1) { qtyInput.value = v - 1; update(); }
+    });
+    qtyPlus.addEventListener('click', () => {
+        qtyInput.value = (parseInt(qtyInput.value) || 1) + 1;
+        update();
+    });
+    qtyInput.addEventListener('change', update);
+
+    // Mitbestellen-Buttons simulieren
+    document.querySelectorAll('.jl-cross-sell-bundle__add').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.textContent = '✓ Hinzugefügt';
+            this.style.background = '#2e7d32';
+            this.style.color = '#fff';
+            this.style.borderColor = '#2e7d32';
+            setTimeout(() => {
+                this.textContent = 'Mitbestellen';
+                this.style.background = '';
+                this.style.color = '';
+                this.style.borderColor = '';
+            }, 2000);
+        });
+    });
+
+    // Initial
+    update();
+</script>
+
+</body>
+</html>

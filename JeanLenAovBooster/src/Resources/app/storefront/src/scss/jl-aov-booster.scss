@@ -1,0 +1,205 @@
+// =============================================
+// AOV BOOSTER STYLES - Jean&Len
+// =============================================
+
+// ----- 1. CROSS-SELL BUNDLE -----
+.jl-cross-sell-bundle {
+    margin-top: 1.25rem;
+    padding: 1rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background: #fafafa;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #000;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    &__title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: inherit;
+        flex: 1;
+        min-width: 0;
+
+        &:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            flex-shrink: 0;
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    &__name {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #333;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__price {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #000;
+    }
+
+    &__add {
+        flex-shrink: 0;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.75rem;
+        border-radius: 6px;
+        white-space: nowrap;
+    }
+}
+
+// ----- 2. FREE SHIPPING PROGRESS BAR -----
+.jl-shipping-bar {
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    background: #f8f8f8;
+    border-radius: 8px;
+
+    &__text {
+        font-size: 0.85rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        text-align: center;
+
+        strong {
+            color: #000;
+        }
+
+        &--success {
+            color: #2e7d32;
+
+            strong {
+                color: #2e7d32;
+            }
+        }
+    }
+
+    &__track {
+        width: 100%;
+        height: 6px;
+        background: #e0e0e0;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    &__fill {
+        height: 100%;
+        background: #000;
+        border-radius: 3px;
+        transition: width 0.4s ease;
+    }
+
+    // Grün bei Erfolg
+    &__text--success + .jl-shipping-bar__track .jl-shipping-bar__fill,
+    &[data-reached="true"] .jl-shipping-bar__fill {
+        background: #2e7d32;
+    }
+}
+
+// ----- 3. MENGENRABATT-HINWEIS -----
+.jl-quantity-incentive {
+    margin-top: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+
+    &__badge {
+        flex-shrink: 0;
+        padding: 0.2rem 0.5rem;
+        background: #000;
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        border-radius: 4px;
+    }
+
+    &__text {
+        font-size: 0.85rem;
+        color: #333;
+        margin: 0;
+
+        strong {
+            color: #000;
+        }
+    }
+}
+
+// ----- RESPONSIVE -----
+@media (max-width: 767.98px) {
+    .jl-cross-sell-bundle {
+        margin-top: 1rem;
+        padding: 0.75rem;
+
+        &__item {
+            flex-wrap: wrap;
+        }
+
+        &__add {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}

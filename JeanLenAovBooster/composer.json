@@ -1,0 +1,32 @@
+{
+    "name": "jeanlen/aov-booster",
+    "description": "AOV Booster: Cross-Sell Bundles, Free Shipping Bar & Quantity Incentives",
+    "version": "1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Jean&Len",
+            "homepage": "https://www.jeanlen.de"
+        }
+    ],
+    "require": {
+        "shopware/core": "~6.5.0 || ~6.6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JeanLen\\AovBooster\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "JeanLen\\AovBooster\\JeanLenAovBooster",
+        "label": {
+            "de-DE": "AOV Booster - Cross-Sell, Versandkosten-Bar & Mengenrabatt",
+            "en-GB": "AOV Booster - Cross-Sell, Free Shipping Bar & Quantity Incentives"
+        },
+        "description": {
+            "de-DE": "Steigert den durchschnittlichen Bestellwert durch Cross-Sell-Bundles, eine Versandkosten-Fortschrittsanzeige und Mengenrabatt-Hinweise.",
+            "en-GB": "Increases average order value through cross-sell bundles, a free shipping progress bar and quantity incentives."
+        }
+    }
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+    <card>
+        <title>Versandkosten-Fortschrittsbalken</title>
+        <title lang="en-GB">Free Shipping Progress Bar</title>
+
+        <input-field type="float">
+            <name>freeShippingThreshold</name>
+            <label>Schwellenwert für kostenlosen Versand (EUR)</label>
+            <label lang="en-GB">Free shipping threshold (EUR)</label>
+            <defaultValue>49</defaultValue>
+        </input-field>
+
+        <input-field type="text">
+            <name>freeShippingMessage</name>
+            <label>Nachricht (nutze {amount} als Platzhalter)</label>
+            <label lang="en-GB">Message (use {amount} as placeholder)</label>
+            <defaultValue>Nur noch {amount} bis zum kostenlosen Versand!</defaultValue>
+        </input-field>
+
+        <input-field type="text">
+            <name>freeShippingSuccessMessage</name>
+            <label>Erfolgsnachricht</label>
+            <label lang="en-GB">Success message</label>
+            <defaultValue>Du hast kostenlosen Versand freigeschaltet!</defaultValue>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Mengenrabatt-Hinweis</title>
+        <title lang="en-GB">Quantity Incentive</title>
+
+        <input-field type="int">
+            <name>quantityIncentiveMin</name>
+            <label>Ab welcher Menge Hinweis anzeigen</label>
+            <label lang="en-GB">Show incentive starting at quantity</label>
+            <defaultValue>2</defaultValue>
+        </input-field>
+
+        <input-field type="float">
+            <name>quantityDiscountPercent</name>
+            <label>Rabatt in Prozent</label>
+            <label lang="en-GB">Discount percentage</label>
+            <defaultValue>10</defaultValue>
+        </input-field>
+    </card>
+</config>

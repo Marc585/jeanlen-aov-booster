@@ -1,0 +1,69 @@
+{% sw_extends '@Storefront/storefront/page/product-detail/buy-widget.html.twig' %}
+
+{# === 1. CROSS-SELL BUNDLE unter dem Warenkorb-Button === #}
+{% block page_product_detail_buy_container %}
+    {{ parent() }}
+
+    {% set crossSellings = page.crossSellings %}
+    {% if crossSellings|length > 0 %}
+        <div class="jl-cross-sell-bundle" data-jl-cross-sell>
+            <div class="jl-cross-sell-bundle__header">
+                <span class="jl-cross-sell-bundle__icon">+</span>
+                <span class="jl-cross-sell-bundle__title">Dazu passt perfekt</span>
+            </div>
+            <div class="jl-cross-sell-bundle__items">
+                {% for crossSelling in crossSellings %}
+                    {% for product in crossSelling.products|slice(0, 3) %}
+                        <div class="jl-cross-sell-bundle__item">
+                            <a href="{{ seoUrl('frontend.detail.page', { productId: product.id }) }}"
+                               class="jl-cross-sell-bundle__link">
+                                {% if product.cover %}
+                                    {% sw_thumbnails 'jl-cross-sell-thumb' with {
+                                        media: product.cover.media,
+                                        sizes: { 'default': '80px' }
+                                    } %}
+                                {% endif %}
+                                <div class="jl-cross-sell-bundle__info">
+                                    <span class="jl-cross-sell-bundle__name">{{ product.translated.name }}</span>
+                                    <span class="jl-cross-sell-bundle__price">{{ product.calculatedPrice.unitPrice|currency }}</span>
+                                </div>
+                            </a>
+                            <form action="{{ path('frontend.checkout.line-item.add') }}"
+                                  method="post"
+                                  class="jl-cross-sell-bundle__form">
+                                {{ sw_csrf('frontend.checkout.line-item.add') }}
+                                <input type="hidden" name="redirectTo" value="frontend.detail.page">
+                                <input type="hidden" name="redirectParameters[productId]" value="{{ page.product.id }}">
+                                <input type="hidden" name="lineItems[{{ product.id }}][id]" value="{{ product.id }}">
+                                <input type="hidden" name="lineItems[{{ product.id }}][referencedId]" value="{{ product.id }}">
+                                <input type="hidden" name="lineItems[{{ product.id }}][type]" value="product">
+                                <input type="hidden" name="lineItems[{{ product.id }}][stackable]" value="1">
+                                <input type="hidden" name="lineItems[{{ product.id }}][removable]" value="1">
+                                <input type="hidden" name="lineItems[{{ product.id }}][quantity]" value="1">
+                                <button type="submit" class="jl-cross-sell-bundle__add btn btn-outline-primary btn-sm">
+                                    Mitbestellen
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {# === 2. MENGENRABATT-HINWEIS === #}
+    {% set product = page.product %}
+    {% set unitPrice = product.calculatedPrice.unitPrice %}
+    <div class="jl-quantity-incentive"
+         data-jl-quantity-incentive
+         data-unit-price="{{ unitPrice }}"
+         data-discount-percent="{{ config('JeanLenAovBooster.config.quantityDiscountPercent') ?: 10 }}"
+         data-min-quantity="{{ config('JeanLenAovBooster.config.quantityIncentiveMin') ?: 2 }}"
+         style="display: none;">
+        <div class="jl-quantity-incentive__badge">Spar-Tipp</div>
+        <p class="jl-quantity-incentive__text">
+            Bestelle <strong data-quantity-target>2</strong> und spare
+            <strong data-savings-target></strong>!
+        </p>
+    </div>
+{% endblock %}

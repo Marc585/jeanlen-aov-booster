@@ -1,0 +1,31 @@
+{% sw_extends '@Storefront/storefront/component/checkout/offcanvas-cart.html.twig' %}
+
+{# === FREE SHIPPING PROGRESS BAR im Offcanvas-Warenkorb === #}
+{% block component_offcanvas_cart_header %}
+    {{ parent() }}
+
+    {% set threshold = config('JeanLenAovBooster.config.freeShippingThreshold') ?: 49 %}
+    {% set cartTotal = page.cart.price.totalPrice ?? 0 %}
+    {% set remaining = threshold - cartTotal %}
+    {% set percentage = ((cartTotal / threshold) * 100)|round(0) %}
+    {% if percentage > 100 %}{% set percentage = 100 %}{% endif %}
+
+    <div class="jl-shipping-bar"
+         data-jl-shipping-bar
+         data-threshold="{{ threshold }}"
+         data-message="{{ config('JeanLenAovBooster.config.freeShippingMessage') ?: 'Nur noch {amount} bis zum kostenlosen Versand!' }}"
+         data-success-message="{{ config('JeanLenAovBooster.config.freeShippingSuccessMessage') ?: 'Du hast kostenlosen Versand freigeschaltet!' }}">
+        {% if remaining > 0 %}
+            <p class="jl-shipping-bar__text">
+                Nur noch <strong>{{ remaining|currency }}</strong> bis zum kostenlosen Versand!
+            </p>
+        {% else %}
+            <p class="jl-shipping-bar__text jl-shipping-bar__text--success">
+                Du hast kostenlosen Versand freigeschaltet!
+            </p>
+        {% endif %}
+        <div class="jl-shipping-bar__track">
+            <div class="jl-shipping-bar__fill" style="width: {{ percentage }}%;"></div>
+        </div>
+    </div>
+{% endblock %}
