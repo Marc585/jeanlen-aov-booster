@@ -28,20 +28,53 @@
             z-index: 1000;
         }
         .preview-banner strong { color: #ffd700; }
-        .preview-banner .tag {
-            display: inline-block;
-            background: #e74c3c;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 3px;
-            margin-left: 6px;
-            vertical-align: middle;
-            text-transform: uppercase;
+        .preview-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        .preview-banner .tag--green {
+        .preview-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: #fff;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preview-toggle:hover { background: #ffd700; }
+        .preview-toggle__dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
             background: #2e7d32;
+            transition: background 0.2s;
+        }
+        .preview-toggle--off .preview-toggle__dot {
+            background: #e74c3c;
+        }
+
+        /* Elemente im ausgeblendeten Zustand */
+        body.optimizations-off .jl-cross-sell-bundle,
+        body.optimizations-off .jl-quantity-incentive,
+        body.optimizations-off .jl-shipping-bar,
+        body.optimizations-off .breadcrumb,
+        body.optimizations-off .buy-microcopy,
+        body.optimizations-off .konfetti-hint,
+        body.optimizations-off .product-info__reviews-inline,
+        body.optimizations-off .annotation {
+            display: none !important;
+        }
+        body.optimizations-off .highlight-new::before,
+        body.optimizations-off .highlight-new--green::before {
+            display: none !important;
         }
 
         /* === HEADER === */
@@ -551,8 +584,13 @@
 
 <!-- VORSCHAU-HINWEIS -->
 <div class="preview-banner">
-    Diese Vorschau zeigt die <strong>AOV-Optimierungen</strong> für die Produktdetailseite.
-    Alle neuen Elemente sind mit <span class="tag">NEU</span> oder <span class="tag tag--green">AOV+</span> markiert.
+    <span class="preview-banner__text" id="banner-text">
+        Diese Vorschau zeigt die <strong>AOV-Optimierungen</strong> für die Produktdetailseite.
+    </span>
+    <button class="preview-toggle" id="toggle-btn" onclick="toggleOptimizations()">
+        <span class="preview-toggle__dot"></span>
+        <span id="toggle-label">Optimierungen ausblenden</span>
+    </button>
 </div>
 
 <!-- PROMO BANNER -->
@@ -828,6 +866,28 @@
 
     // Initial
     update();
+
+    // Toggle Optimierungen ein/aus
+    function toggleOptimizations() {
+        const body = document.body;
+        const btn = document.getElementById('toggle-btn');
+        const label = document.getElementById('toggle-label');
+        const bannerText = document.getElementById('banner-text');
+
+        body.classList.toggle('optimizations-off');
+
+        if (body.classList.contains('optimizations-off')) {
+            label.textContent = 'Optimierungen einblenden';
+            btn.classList.add('preview-toggle--off');
+            bannerText.innerHTML = 'Aktuelle Produktseite <strong>ohne</strong> Optimierungen';
+        } else {
+            label.textContent = 'Optimierungen ausblenden';
+            btn.classList.remove('preview-toggle--off');
+            bannerText.innerHTML = 'Diese Vorschau zeigt die <strong>AOV-Optimierungen</strong> für die Produktdetailseite.';
+        }
+    }
+    // Make toggleOptimizations available globally
+    window.toggleOptimizations = toggleOptimizations;
 </script>
 
 </body>
