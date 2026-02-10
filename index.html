@@ -61,20 +61,19 @@
             background: #e74c3c;
         }
 
-        /* Elemente im ausgeblendeten Zustand */
-        body.optimizations-off .jl-cross-sell-bundle,
-        body.optimizations-off .jl-quantity-incentive,
-        body.optimizations-off .jl-shipping-bar,
-        body.optimizations-off .breadcrumb,
-        body.optimizations-off .buy-microcopy,
-        body.optimizations-off .konfetti-hint,
-        body.optimizations-off .product-info__reviews-inline,
-        body.optimizations-off .annotation {
+        /* Original-Seite iframe */
+        .original-iframe {
+            display: none;
+            width: 100%;
+            height: calc(100vh - 52px);
+            border: none;
+        }
+        /* Optimierungen aus: Mockup ausblenden, iframe einblenden */
+        body.optimizations-off .optimized-content {
             display: none !important;
         }
-        body.optimizations-off .highlight-new::before,
-        body.optimizations-off .highlight-new--green::before {
-            display: none !important;
+        body.optimizations-off .original-iframe {
+            display: block !important;
         }
 
         /* === HEADER === */
@@ -593,6 +592,12 @@
     </button>
 </div>
 
+<!-- ORIGINAL-SEITE (iframe, initial versteckt) -->
+<iframe class="original-iframe" id="original-iframe" src="about:blank"></iframe>
+
+<!-- OPTIMIERTE VERSION -->
+<div class="optimized-content">
+
 <!-- PROMO BANNER -->
 <div class="promo-bar">
     Valentinstag-Aktion: Sichere dir jetzt exklusive Angebote!
@@ -787,6 +792,8 @@
     </div>
 </div>
 
+</div><!-- /optimized-content -->
+
 <!-- Interaktives JS für die Vorschau -->
 <script>
     const qtyInput = document.getElementById('qty-input');
@@ -868,18 +875,27 @@
     update();
 
     // Toggle Optimierungen ein/aus
+    const ORIGINAL_URL = 'https://www.jeanlen.de/Hand-Body-Wash-Rosemary-Ginger-Refill-INT-1-5-L/2902101030';
+    let iframeLoaded = false;
+
     function toggleOptimizations() {
         const body = document.body;
         const btn = document.getElementById('toggle-btn');
         const label = document.getElementById('toggle-label');
         const bannerText = document.getElementById('banner-text');
+        const iframe = document.getElementById('original-iframe');
 
         body.classList.toggle('optimizations-off');
 
         if (body.classList.contains('optimizations-off')) {
+            // Originalseite laden (nur beim ersten Mal)
+            if (!iframeLoaded) {
+                iframe.src = ORIGINAL_URL;
+                iframeLoaded = true;
+            }
             label.textContent = 'Optimierungen einblenden';
             btn.classList.add('preview-toggle--off');
-            bannerText.innerHTML = 'Aktuelle Produktseite <strong>ohne</strong> Optimierungen';
+            bannerText.innerHTML = 'Aktuelle Produktseite <strong>ohne</strong> Optimierungen (Original)';
         } else {
             label.textContent = 'Optimierungen ausblenden';
             btn.classList.remove('preview-toggle--off');
